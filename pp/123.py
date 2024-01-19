@@ -12,3 +12,4 @@ while True:
     if not k:
         break
 print(sum(a))
+#yes yes
