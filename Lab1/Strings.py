@@ -1,0 +1,2 @@
+print("Jesus")
+print('Jesus')
