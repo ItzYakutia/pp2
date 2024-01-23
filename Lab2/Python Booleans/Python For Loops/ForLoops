@@ -1,0 +1,40 @@
+"""
+rl = list(("minecraft", "pig", "peppa", "bear"))
+for x in rl:
+    print(x)
+    if x == "peppa":
+      break
+  
+  
+for y in "minecraft":
+    print(y)
+    
+rl = list(("minecraft", "pig", "peppa", "bear"))
+for x in rl:
+    if x == "peppa":
+      break
+    print(x)
+    
+rl = list(("minecraft", "pig", "peppa", "bear"))
+for x in rl:
+    if x == "peppa":
+      continue
+    print(x)
+"""
+
+for x in range(2, 19, 2):
+    if x == 4: break
+    print(x)
+else:
+    print("Finished")
+    
+    
+lis1 = ["marvel", "georgeous", "flow"]
+lis = ["minecraft", "pig", "peppa", "bear"]
+
+for x in lis1:
+  for y in lis:
+    print(x, y)
+    
+for x in [0, 1, 2]:
+  pass

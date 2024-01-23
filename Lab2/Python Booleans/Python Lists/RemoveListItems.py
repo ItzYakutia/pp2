@@ -1,0 +1,11 @@
+rl = list(("minecraft", "pig", "peppa", "bear", "bear"))
+rl.remove("bear")
+print(rl)
+rl.pop()
+print(rl)
+rl.pop(2)
+print(rl)
+del rl[0]
+print(rl)
+rl.clear()
+print(rl)

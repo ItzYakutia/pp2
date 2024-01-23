@@ -1,0 +1,7 @@
+print(1 + 1)
+print(1 - 1)
+print(2 * 6)
+print(6 / 2)
+print(6 % 5)
+print(2 ** 6)
+print(6 // 4)
