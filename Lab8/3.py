@@ -6,7 +6,7 @@ pg.init()
 class tools(pg.sprite.Sprite):
     def __init__(self, pic, position):
         super().__init__()
-        self.pic = pg.image.load(f'Lab9/things/{pic}')
+        self.pic = pg.image.load(f'Lab8/things/{pic}')
         self.pic = pg.transform.scale(self.pic, (30, 30))
         self.rect = self.pic.get_rect(center = position)
     def draw(self):
