@@ -1,4 +1,4 @@
-import pygame as pg, random, time
+import pygame as pg, random, time, threading
 from color_palette import *
 
 pg.init()
@@ -42,7 +42,6 @@ class Snake:
         for i in range(len(self.body) - 1, 0, -1):
             self.body[i].x = self.body[i - 1].x
             self.body[i].y = self.body[i - 1].y
-
         self.body[0].x += self.dx
         self.body[0].y += self.dy
 
@@ -54,8 +53,11 @@ class Snake:
 
     def check_collision(self, food):
         head = self.body[0]
-        if head.x == food.pos.x and head.y == food.pos.y:
-            self.body.append(Point(head.x, head.y)) #adding to snake body
+        if head.x == food.pos.x and head.y == food.pos.y:  #eating food checker
+            ran = random.randint(1, 5)
+            while ran > 0:
+                self.body.append(Point(head.x, head.y)) #adding to snake body
+                ran -= 1
 
 snake = Snake()
 
@@ -64,12 +66,12 @@ class Food:
         self.pos = self.generate_random_position()
 
     def generate_random_position(self):
-        while True:
+        while True:       
             x = random.randint(0, (SW // CELL) - 1)
             y = random.randint(0, (SH // CELL) - 1)
             if not any(part.x == x and part.y == y for part in snake.body): #checking if food was in snake
                 return Point(x, y)
-
+            
     def draw(self):
         pg.draw.rect(screen, colorGREEN, (self.pos.x * CELL, self.pos.y * CELL, CELL, CELL))
 
@@ -78,9 +80,8 @@ FPS = 5
 clock = pg.time.Clock()
 
 food = Food()
-
 score = 0
-level = 1
+last_tick = 0
 
 done = False
 while not done:
@@ -104,7 +105,12 @@ while not done:
     draw_grid_chess()
 
     snake.move()
-
+    ticks = pg.time.get_ticks()
+    if ticks - last_tick > 5000: #food disappear after 5 sec
+        food.pos = food.generate_random_position()
+        if food.pos in snake.body: #also checking if food in snake
+            food.pos = food.generate_random_position()
+        last_tick += 5000 
     # Check for border (wall) 
     head = snake.body[0]
     if head.x < 0:
@@ -128,18 +134,17 @@ while not done:
             time.sleep(2)
             done = True
 
-    snake.check_collision(food)
+    snake.check_collision(food) #activates snake body increasing
 
     # Generate new food position 
     if head.x == food.pos.x and head.y == food.pos.y:
         score += 1
         if score % 3 == 0:  # Increase level every 3 foods
-            level += 1
             FPS += 1  # Increase speed 
         food.pos = food.generate_random_position()
         if food.pos in snake.body: #also checking if food in snake
             food.pos = food.generate_random_position()
-            
+       
     c_text = font.render(f'Food: {score}', True, colorBLACK) #score counter
     levelk = font.render(f'Level: {FPS - 5}', True, colorBLACK) #level counter
     screen.blit(levelk, (0, 30))
